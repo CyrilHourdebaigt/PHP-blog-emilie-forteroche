@@ -2,6 +2,15 @@
 
 class CommentController 
 {
+    // On vérifie que l'utilisateur est connecté.
+    private function checkIfUserIsConnected(): void
+    {
+        if (!isset($_SESSION['user'])) {
+            throw new Exception("Accès non autorisé.");
+        }
+    }
+
+
     /**
      * Ajoute un commentaire.
      * @return void
@@ -44,4 +53,27 @@ class CommentController
         // On redirige vers la page de l'article.
         Utils::redirect("showArticle", ['id' => $idArticle]);
     }
+
+    /**
+     * Supprime un commentaire.
+     * @return void
+     */
+    public function deleteComment() : void
+    {
+        $this->checkIfUserIsConnected();
+
+        $id = Utils::request("id", -1);
+
+        if ($id === -1) {
+            throw new Exception("ID de commentaire invalide.");
+        }
+
+        $commentManager = new CommentManager();
+        $comment = $commentManager->getCommentById($id);
+        $commentManager->deleteComment($comment);
+
+
+        Utils::redirect("showArticle", ['id' => $comment->getIdArticle()]);
+    }
+
 }

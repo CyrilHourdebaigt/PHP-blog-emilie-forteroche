@@ -92,4 +92,47 @@ class ArticleManager extends AbstractEntityManager
         $sql = "DELETE FROM article WHERE id = :id";
         $this->db->query($sql, ['id' => $id]);
     }
+
+    /**
+    * Affiche le nombre de vues d'un article.
+    * @param int $id : L'id de l'article.
+    * @return void
+    */
+    public function incrementViews(int $id) : void
+    {
+        $sql = "UPDATE article SET views = views + 1 WHERE id = :id";
+        $this->db->query($sql, ['id' => $id]);
+    }
+
+    // Récupération et tri de tous articles avec le nombres de commentaires.
+    public function getAllArticlesWithStats(string $sort = 'date_creation', string $order = 'DESC'): array
+    {
+        // Liste des colonnes autorisées.
+        $allowedSort = ['a.title', 'a.date_creation', 'a.views', 'comment_count'];
+        $allowedOrder = ['ASC', 'DESC'];
+
+        // Valeurs par défaut si les paramètres sont invalides.
+        if (!in_array($sort, $allowedSort)) {
+            $sort = 'date_creation';
+        }
+        if (!in_array(strtoupper($order), $allowedOrder)) {
+            $order = 'DESC';
+        }
+
+        $sql = "
+            SELECT a.*, 
+            (SELECT COUNT(*) FROM comment c WHERE c.id_article = a.id) AS comment_count
+            FROM article a
+            ORDER BY $sort $order
+        ";
+
+        $result = $this->db->query($sql);
+        $articles = [];
+
+        while ($article = $result->fetch()) {
+            $articles[] = $article;
+        }
+
+        return $articles;
+    }
 }

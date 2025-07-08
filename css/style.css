@@ -337,6 +337,63 @@ a.info {
     border: 1px solid var(--backgroundColor);
 }
 
+button.delete {
+    background-color: #c62828;
+    color: white;
+    border: none;
+    padding: 0.4em 0.8em;
+    margin-top: 0.5em;
+    cursor: pointer;
+  }
+  
+  button.delete:hover {
+    background-color: #b71c1c;
+  }
+  
+
+/** 
+ * Monitoring.
+ */
+ .monitoring-table {
+    width: 90%;
+    margin: 2rem auto;
+    border-collapse: collapse;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.monitoring-table th {
+    background-color: #c99d26; /* Jaune/orangé du thème */
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: bold;
+}
+
+.monitoring-table td {
+    padding: 1rem;
+    border: 1px solid #ddd;
+}
+
+/* Ligne sur deux */
+.monitoring-table tbody tr:nth-child(odd) {
+    background-color: #99a140;
+}
+.monitoring-table tbody tr:nth-child(even) {
+    background-color: #fcf4dc;
+}
+
+/* Titres en rouge foncé */
+h1, h2 {
+    text-align: center;
+    color: #d54427;
+    margin-top: 2rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.monitoring-table tbody tr:hover {
+    background-color: #e0e0e0;
+}
+
 /** 
  * Footer global de la page.
  */
