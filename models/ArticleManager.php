@@ -104,7 +104,8 @@ class ArticleManager extends AbstractEntityManager
         $this->db->query($sql, ['id' => $id]);
     }
 
-    // Récupération et tri de tous articles avec le nombres de commentaires.
+    // Récupération de tous articles avec le nombres de commentaires.
+    // et tri selon la colonne et l’ordre choisis.
     public function getAllArticlesWithStats(string $sort = 'date_creation', string $order = 'DESC'): array
     {
         // Liste des colonnes autorisées.
